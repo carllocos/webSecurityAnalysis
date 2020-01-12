@@ -4,9 +4,8 @@
     <meta charset="utf-8">
     <title>Caja Security Analysis</title>
 
-    <script type="text/javascript" src="http://caja.appspot.com/caja.js">
-    </script>
-    <!-- <script src="testsSuite.js"></script> -->
+    <script type="text/javascript" src="http://caja.appspot.com/caja.js">  </script>
+    <!-- <script src="http://localhost:8000/thirdpartyCode.js"></script> -->
 
   </head>
   <body>
@@ -22,10 +21,16 @@
       y: 33
     }
 
+    function alertGreeting(arg) {
+      alert(arg)
+    }
+
     </script>
 
 
     <script type="text/javascript">
+
+    const scriptURL = "http://localhost:8000/thirdpartyCode.js"
       caja.whenReady(function (ev) {
           console.log("Ready!")
       })
@@ -33,14 +38,15 @@
           debug: true
       })
 
-      caja.load(document.getElementById("guestCode"), undefined, function (frame) {
+      caja.load(undefined, undefined, function (frame) {
 
-          var tamedCoordinates = caja.tame(sensitiveObj);
-          frame.code('https://raw.githubusercontent.com/carllocos/webSecurityAnalysis/master/thirdpartyCode.js?token=AFSJFWSIO3SS2RDVK4SIJES6DNYXE', 'application/javascript')
-              .api({ coordinates: tamedCoordinates})
-              .run(function(res) {
-                alert( "result " + res );
-                });
+        caja.markFunction(alertGreeting);
+        var tamedCoordinates = caja.tame(sensitiveObj)
+        var tamedAlertGreeting = caja.tame(alertGreeting);
+
+        frame.code(scriptURL, 'application/javascript')
+              .api({ sayHello: tamedAlertGreeting, coordinates: tamedCoordinates})
+              .run();
       })
     </script>
   </body>
