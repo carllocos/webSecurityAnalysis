@@ -2,25 +2,45 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Hey</title>
+    <title>Caja Security Analysis</title>
 
-
+    <script type="text/javascript" src="http://caja.appspot.com/caja.js">
+    </script>
+    <!-- <script src="testsSuite.js"></script> -->
 
   </head>
   <body>
 
     <h1>Hello</h1>
 
+    <div id="guestCode">
+    </div>
+
+    <script type="text/javascript">
+    var sensitiveObj = {
+      x: 42,
+      y: 33
+    }
+
+    </script>
 
 
-    <script src="http://caja.appspot.com/caja.js">
-      caja.initialize({
-        debug: true
+    <script type="text/javascript">
+      caja.whenReady(function (ev) {
+          console.log("Ready!")
       })
-      caja.whenReady(function () {
-        console.log(ev)
-        alert('ready')
+      caja.initialize({
+          debug: true
+      })
 
+      caja.load(document.getElementById("guestCode"), undefined, function (frame) {
+
+          var tamedCoordinates = caja.tame(sensitiveObj);
+          frame.code('http://localhost:8000/thirdpartyCode.js', 'application/javascript')
+              .api({ coordinates: tamedCoordinates})
+              .run(function(res) {
+                alert( "result " + res );
+                });
       })
     </script>
   </body>
