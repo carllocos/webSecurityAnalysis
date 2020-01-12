@@ -1,6 +1,7 @@
 
 
 function tryTest() {
-  console.log(2)
+  console.log(coordinates)
+  console.log(sensitiveObj)
 
 }

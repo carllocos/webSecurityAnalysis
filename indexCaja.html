@@ -36,7 +36,7 @@
       caja.load(document.getElementById("guestCode"), undefined, function (frame) {
 
           var tamedCoordinates = caja.tame(sensitiveObj);
-          frame.code('http://localhost:8000/thirdpartyCode.js', 'application/javascript')
+          frame.code('https://raw.githubusercontent.com/carllocos/webSecurityAnalysis/master/thirdpartyCode.js?token=AFSJFWSIO3SS2RDVK4SIJES6DNYXE', 'application/javascript')
               .api({ coordinates: tamedCoordinates})
               .run(function(res) {
                 alert( "result " + res );
