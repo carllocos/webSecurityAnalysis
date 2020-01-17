@@ -1,9 +1,11 @@
-var connect = require('connect'),
-    directory = './';
+var static = require('node-static');
+var http = require('http');
 
-const PORT = 8000
-connect()
-    .use(connect.static(directory))
-    .listen(80);
 
-console.log('Listening on port 80.');
+var PORT = 8000
+
+var file = new(static.Server)();
+
+http.createServer(function (req, res) {
+  file.serve(req, res);
+}).listen(PORT);
