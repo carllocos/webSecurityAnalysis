@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Complete Isolation example</title>
+
+    <!-- Load required caja module-->
+    <script type="text/javascript" src="http://caja.appspot.com/caja.js">
+    </script>
+
+</head>
+
+<body>
+    <div class="">
+        <h1>Complete Isolation Example</h1>
+
+        <p>In this example we show complete isolation of third-party content</p>
+        <br>
+        <br>
+
+        <p>I'm such a big fan of . Hopefully no one will read it</p>
+        <br>
+        <br>
+        <h4>Third Party content is contained in next div</h4>
+        <div id="guest"></div>
+
+
+        <!-- <script type="text/javascript">
+
+            var sensitiveContent = {
+                password: 'c0mpléX!PsW'
+            }
+
+
+            //Supported by most browsers. Not IE8:
+            document.addEventListener("DOMContentLoaded", function (event) {
+                document.getElementById('passwordInpJSFlow').value = sensitiveContent.password
+                document.getElementById('passwordInpCaja').value = sensitiveContent.password
+            });
+
+        </script> -->
+
+
+        <script type="text/javascript">
+
+            const NO_NETWORK = undefined;
+            const guestURL = 'http://localhost:3030/example1_guest.html'
+
+            caja.whenReady(function (ev) {
+                console.log("Ready!")
+            })
+            caja.initialize({
+                cajaServer: 'http://caja.appspot.com/',
+                debug: true
+            })
+
+            caja.load(document.getElementById('guest'), NO_NETWORK, (frame) => {
+                frame.code(guestURL, 'text/html').run()
+            })
+
+
+        </script>
+</body>
+
+</html>

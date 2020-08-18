@@ -57,13 +57,15 @@
 
       caja.load(undefined, undefined, function (frame) {
 
-        caja.markFunction(alertGreeting);
+
 
         frame.code("passwordCaja.js", 'application/javascript')
               .api({
                 coordinates: caja.tame(sensitiveContent)
               })
-              .run();
+              .run(function(res){
+                console.log("The result is " + res);
+              });
       })
 
 
