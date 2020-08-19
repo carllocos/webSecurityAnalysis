@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Complete Isolation example</title>
+
+    <!-- Load required caja module-->
+    <script type="text/javascript" src="http://caja.appspot.com/caja.js">
+    </script>
+
+
+</head>
+
+<body>
+    <div class="">
+        <h3>Services Collaborate</h3>
+
+        <p>In this example we see how two services collaborate. One verifies if a post title is already taken, if so it
+            asks the other to suggest one. The title cannot be leaked.</p>
+        <br>
+        <div id="guest1" style="width: 400px; height: 200px;"></div>
+        <div id="guest2" style="width: 400px; height: 200px;"></div>
+
+        <!-- Comment script for behaviour without Caja -->
+        <script type="text/javascript">
+            caja.whenReady(function (ev) { console.log("Ready!") })
+
+            caja.initialize({
+                cajaServer: 'http://caja.appspot.com/',
+                debug: true
+            })
+
+            const GUEST1 = document.getElementById('guest1')
+            const GUEST2 = document.getElementById('guest2')
+            const NO_NETWORK = undefined;
+            const guest1URL = 'http://localhost:3030/example4_guest1.html'
+            const guest2URL = 'http://localhost:3050/example4_guest2.html'
+
+            var shared = {
+                cb: null,
+                titleListener: (cb_) => {
+                    this.cb = cb_
+                },
+                setTitle: (t_) => {
+                    if (typeof t_ === 'number') {
+                        this.cb(t_)
+                    }
+                },
+                setTitleUnsafe: (t_) => { this.cb(t_) }
+            };
+
+            caja.load(GUEST1, NO_NETWORK, (frame) => {
+                var tamedSet = caja.tame(caja.markFunction(shared.setTitle));
+                var tamedSetUnsafe = caja.tame(caja.markFunction(shared.setTitleUnsafe));
+                frame.code(guest1URL, 'text/html')
+                    .api({ setTitle: tamedSet, setTitleUnsafe: tamedSetUnsafe })
+                    .run()
+
+            })
+
+            caja.load(GUEST2, NO_NETWORK, (frame) => {
+                var tamedList = caja.tame(caja.markFunction(shared.titleListener))
+                frame.code(guest2URL, 'text/html')
+                    .api({ titleListener: tamedList })
+                    .run()
+            })
+
+
+
+        </script>
+        <!-- Uncomment next line and previous script to see what happens without Caja -->
+        <!-- <iframe src="http://localhost:3030/example1_guest.html" height="300" width="400" title="Iframe Example"></iframe> -->
+</body>
+
+</html>

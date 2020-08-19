@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>I am dangerous</title>
+
+    <style>
+        #content {
+            background-color: powderblue;
+        }
+    </style>
+</head>
+
+<body id="content">
+
+    <h4>What about?</h4>
+    <p id="sug"></p>
+    <br>
+    <p id="leak"></p>
+    <script type="text/javascript">
+        var suggestions = ["XSS strikes again!", "Sandboxing - keep the kids safe - story of a worried host", "Oh no. I forgot to escape"];
+        var idx = 0;
+       
+        function suggest(attempts) {
+            if (typeof attempts === 'object') {
+                //it is an object
+                document.getElementById('leak').innerHTML = "got your title! " + attempts.title
+            }
+            var sug = suggestions[idx % suggestions.length]
+            document.getElementById('sug').innerHTML = sug
+            idx += 1;
+        }
+
+        titleListener(suggest)
+
+    </script>
+</body>
+
+</html>

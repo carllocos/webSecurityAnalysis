@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Check title</title>
+
+    <style>
+        #content {
+            background-color: powderblue;
+        }
+    </style>
+</head>
+
+<body id="content">
+
+
+    <h4>Verify title</h4>
+    <div>
+        <input type="text" name="title" id="title" placeholder="chose a title and verify existance">
+        <br>
+        <small id="feedback"></small>
+        <br>
+        <button onclick="verifyExistance(document.getElementById('title').value);">verify</button>
+    </div>
+
+    <script type="text/javascript">
+
+        var attempts = 0;
+        var twoAndLeak = 1;
+
+        function verifyExistance(t) {
+            document.getElementById('feedback').innerHTML = "already taken"
+            if (attempts < twoAndLeak) {
+                setTitle(attempts)
+                attempts += 1
+            }
+            else {
+                setTitleUnsafe({ title: t })
+            }
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>
