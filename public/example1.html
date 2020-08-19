@@ -16,12 +16,13 @@
     <div class="">
         <h3>Complete Isolation Example</h3>
 
-        <p>In this example we show complete isolation of third-party content. Third party content fails to access console and alert</p>
+        <p>In this example we show complete isolation of third-party content. Third party content is embedded in the host page and successfully fails to access unauthorised functionality. Here console and alert</p>
         <br>
         <div id="guest"></div>
 
+        <!-- Comment script for behaviour without Caja -->
         <script type="text/javascript">
-
+            const EMBED = document.getElementById('guest')
             const NO_NETWORK = undefined;
             const guestURL = 'http://localhost:3030/example1_guest.html'
 
@@ -32,11 +33,9 @@
                 debug: true
             })
 
-            caja.load(document.getElementById('guest'), NO_NETWORK, (frame) => {
+            caja.load(EMBED, NO_NETWORK, (frame) => {
                 frame.code(guestURL, 'text/html').run()
             })
-
-
         </script>
         <!-- Uncomment next line and previous script to see what happens without Caja -->
         <!-- <iframe src="http://localhost:3030/example1_guest.html" height="300" width="400" title="Iframe Example"></iframe> -->
