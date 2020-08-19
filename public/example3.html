@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Controlled Network Access</title>
+
+    <!-- Load required caja module-->
+    <script type="text/javascript" src="http://caja.appspot.com/caja.js">
+    </script>
+
+
+</head>
+
+<body>
+    <div class="">
+        <h3>Controlled Network Access Example</h3>
+
+        <p>In this example we show a guest that has resicted network access. The network access is limited to two requests; 1)image and 2) the joke text. After two and other kinds of request fail</p>
+        <br>
+        <div id="guest"></div>
+
+        <!-- Comment script for behaviour without Caja -->
+
+        <script type="text/javascript">
+            caja.whenReady((ev) => { console.log("Ready!") })
+            caja.initialize({
+                cajaServer: 'http://caja.appspot.com/',
+                debug: true
+            })
+
+            const EMBED = document.getElementById('guest')
+            const max_requets = 2
+            var requests_made = 0
+            
+            const NETWORK_POLICY = {
+                rewrite: (uri) => {
+                    //TODO
+                    if(requests_made >= max_requets){
+                        return undefined
+                    }
+
+                    requests_made +=1;
+                    if (/http:\/\/localhost:3030/.test(uri)) {
+                        return uri;
+                    }
+                    return undefined
+                }
+            };
+            const guestURL = 'http://localhost:3030/example3_guest.html'
+            caja.load(EMBED, NETWORK_POLICY, (frame) => {
+
+                var hostAPI = {
+                    xhttp: (url, cb)=>{
+                        new XMLHttpRequest()
+                    },
+                    log: console.log
+                }
+
+                caja.markReadOnlyRecord(hostAPI);
+                caja.markFunction(hostAPI.xhttp);
+                caja.markFunction(hostAPI.log);
+                var tamedAPI = caja.tame(hostAPI);
+                frame.code(guestURL, 'text/html')
+                    .api({ host: tamedAPI })
+                    .run()
+            })
+        </script>
+
+        <!-- Uncomment next line and previous script to see what happens without Caja -->
+        <!-- <iframe src="http://localhost:3030/example3_guest.html" height="300" width="400" title="Iframe Example"></iframe> -->
+</body>
+
+</html>
