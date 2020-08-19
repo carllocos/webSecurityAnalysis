@@ -16,7 +16,6 @@ const serverHost  = require('http').createServer(appHost);
 serverHost.listen(ports.host, () => { console.log('Server listening at port %d', ports.host);});
 appHost.use(expHost.static(pathHost.join(__dirname, 'public')))
 
-
 //Guest server1
 const expGuest1 = require('express');
 const appGuest1     = expGuest1();
@@ -26,6 +25,8 @@ const pathGuest1    = require('path');
 const serverGuest1  = require('http').createServer(appGuest1);
 serverGuest1.listen(ports.guest1, () => { console.log('Server listening at port %d', ports.guest1);});
 appGuest1.use(expGuest1.static(pathGuest1.join(__dirname, 'public')))
+const routerGuest1 = require('./router.js')
+appGuest1.use(routerGuest1);
 
 
 
