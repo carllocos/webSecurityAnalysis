@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Network disabled example</title>
+    <script src='http://localhost:3030/jsflow/example2_guest.js'></script>
+</head>
+
+<body>
+    <h1>Network disabled</h1>
+    <p>In this example, the guest code checks the password strength and provides feedback to the user. The guest code
+        also attempts an unauthorised network request to send the password to its server</p>
+
+    <div>
+        <label>Password</label>
+        <br>
+        <input type="text" id="pswd" name="" value="" placeholder="the guest verifies this password">
+        <br>
+        <small id="feedback">guest inserts feedback here</small>
+        <br>
+        <button id="btn">verify</button>
+        <br>
+        <small id="backend"></small>
+    </div>
+
+    <!-- Behaviour without Caja. Uncomment and comment previous script to trigger -->
+    <script>
+        document.getElementById("btn").addEventListener("click", function (){
+            var p = document.getElementById("pswd").value;
+            console.log("value of p" + p);
+            document.getElementById('feedback').innerHTML = checkStrength(p);
+        });
+
+        
+        function testo(x){
+            return x + 2;
+        };
+
+        console.log(testo(6));
+    </script>
+</body>
+
+</html>
