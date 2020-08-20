@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Prevent Leak of Sensitive Data</title>
+    <script src='http://localhost:3030/jsflow/example2_guest.js'></script>
+
+    <style>
+        .guest {
+            background-color: powderblue;
+        }
+    </style>
+</head>
+
+<body onload="script();">
+    <h1>Allow leak public data but prevent leak private data</h1>
+
+    <h3>Example description</h3>
+    <div>
+        <p>
+            In this example, we show that it is possible to allow limited access to user data.
+        </p>
+        <p>
+            The host uses a guest that is allowed to;
+            1) provide a custom joke based on the user's username and
+            2) provide an image.
+            The joke request succeeds because it only uses public data (usename).
+            However, the image request fails because it includes in the request sensitive information (i.e. email).
+        </p>
+        <p>
+            The username is public and request involving the username is allowed.
+            The host also contains sensitive information i.e. the email and should not be leaked.
+        </p>
+        <p>Guests are shown in powderblue color.</p>
+    </div>
+    <br>
+    <br>
+
+    <h4>Your username (public) and email (private)</h4>
+    <p>user123</p>
+    <br>
+    <input type="text" readonly name="email" value="user123@jsflow.be">
+    <br>
+
+    <div class="guest" id="divId">
+    </div>
+    <div class="guest" id="imgDiv"></div>
+    <script>
+        loadJokeService("divId", "imgDiv", "user123"); //user123 is public information
+    </script>
+</body>
+
+</html>
