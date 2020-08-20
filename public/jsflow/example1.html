@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Prevent Leak of Sensitive Data</title>
+    <script src='http://localhost:3030/jsflow/example1_guest.js'></script>
+</head>
+
+<body>
+    <h1>Sensitive Leak through The network</h1>
+
+    <h3>Example description</h3>
+    <div>
+        <p>
+            In this example, the host uses a guest to check password strength and provide stength feedback to the user.
+            The input field is where the user inserts the password and the buttons are used to verify the strength.
+            Note that the password is sensitive information and should not be leaked. Hence, the host does not expect
+            any network communication.
+        </p>
+        <p>
+            When buttons "verify" and "verify Safely" are clicked, the guest code tries to leak the password through an
+            image creation.
+            Callback triggered for "verify" does not use JSFlow thus leaks the info.
+            Callback triggered for "verify Safely" uses JSFlow and prevents the leak.
+        </p>
+    </div>
+    <br>
+    <br>
+
+    <h3>Verify your password strength</h3>
+    <div>
+        <label>Password (strong password > 8 chars)</label>
+        <br>
+        <input type="text" id="pswd" name="" value="" placeholder="the guest verifies this password">
+        <br>
+        <small id="feedback">guest inserts feedback here</small>
+        <br>
+        <button id="btn">verify</button>
+        <br>
+        <button id="safeBtn">verify Safely</button>
+    </div>
+
+    <script>
+
+        //unsafe password verifcation
+        document.getElementById("btn").addEventListener("click", function () {    
+            var p = document.getElementById("pswd").value
+            document.getElementById('feedback').innerHTML = checkFunc(p);
+        });
+
+        //safe password verifcation with JSFlow
+        document.getElementById("safeBtn").addEventListener("click", function () {
+            var p = lbl(document.getElementById("pswd").value, 'pswd');
+            document.getElementById('feedback').innerHTML = checkFunc(p);
+        });  
+    </script>
+</body>
+
+</html>

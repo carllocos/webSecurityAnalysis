@@ -2,6 +2,7 @@
 const router = require('express').Router()
 
 router.get('/password/', (req, res) => {
+    console.log("received password " + req.query.pswd);
     return res.json({ reply: "backend received " + req.query.pswd })
 })
 
