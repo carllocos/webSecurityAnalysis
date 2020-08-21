@@ -8,37 +8,36 @@
     <!-- Load required caja module-->
     <script type="text/javascript" src="http://caja.appspot.com/caja.js">
     </script>
-
-
 </head>
 
 <body>
     <div class="">
         <h3>Complete Isolation Example</h3>
 
-        <p>In this example we show complete isolation of third-party content. Third party content is embedded in the host page and successfully fails to access unauthorised functionality. Here console and alert</p>
+        <p>In this example we show complete isolation of third-party content. Third party content is embedded in the
+            host page and successfully fails to access unauthorised functionality. Here console and alert</p>
         <br>
-        <div id="guest"></div>
+        <div id="guest" style="height: 300p; width: 400px;"></div>
 
         <!-- Comment script for behaviour without Caja -->
         <script type="text/javascript">
-            const EMBED = document.getElementById('guest')
-            const NO_NETWORK = undefined;
-            const guestURL = 'http://localhost:3030/example1_guest.html'
 
             caja.whenReady(function (ev) { console.log("Ready!") })
-            
             caja.initialize({
                 cajaServer: 'http://caja.appspot.com/',
                 debug: true
             })
+
+            const EMBED = document.getElementById('guest')
+            const NO_NETWORK = undefined;
+            const guestURL = 'http://localhost:3030/caja/example1_guest.html'
 
             caja.load(EMBED, NO_NETWORK, (frame) => {
                 frame.code(guestURL, 'text/html').run()
             })
         </script>
         <!-- Uncomment next line and previous script to see what happens without Caja -->
-        <!-- <iframe src="http://localhost:3030/example1_guest.html" height="300" width="400" title="Iframe Example"></iframe> -->
+        <!-- <iframe src="http://localhost:3030/caja/example1_guest.html" height="300" width="400" title="Iframe Example"></iframe> -->
 </body>
 
 </html>
