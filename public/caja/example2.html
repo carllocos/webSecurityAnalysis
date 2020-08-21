@@ -13,8 +13,12 @@
 
 <body>
     <h1>Network disabled</h1>
-    <p>In this example, the guest code checks the password strength and provides feedback to the user. The guest code also attempts an unauthorised network request to send the password to its server</p>
-    <form id="form" class="" action="" method="post">
+    <p>In this example, the guest code checks the password strength and provides feedback to the user. 
+        If the password length >= 8, the guest concludes 'strong password'.
+        The guest code also attempts to leak a strong password through an unauthorised network request</p>
+
+    <div>
+
         <label>Password</label>
         <br>
         <input type="text" id="pswd" name="" value="" placeholder="the guest verifies this password">
@@ -24,12 +28,11 @@
         <button id="btn">verify</button>
         <br>
         <small id="backend"></small>
-    </form>
+    </div>
 
     <!-- Example with Caja. Comment Script to disable Caja -->
     <script type="text/javascript">
         //disable of default click behaviour on form
-        document.getElementById("form").addEventListener("click", (ev) => { ev.preventDefault() })
 
         caja.whenReady(function (ev) { console.log("Ready!") })
         caja.initialize({
@@ -40,7 +43,7 @@
 
         const NO_NETWORK = undefined;
         const NO_EMBED = undefined;
-        const guestURL = 'http://localhost:3030/example2_guest.js'
+        const guestURL = 'http://localhost:3030/caja/example2_guest.js'
         caja.load(NO_EMBED, NO_NETWORK, (frame) => {
 
             var listener;
@@ -74,7 +77,6 @@
 
     <!-- Behaviour without Caja. Uncomment and comment previous script to trigger -->
     <!-- <script>
-        document.getElementById("form").addEventListener("click", (ev) => { ev.preventDefault() })
         var listener;
         var pswdService = {
             register: (l) => { listener = l },
@@ -85,7 +87,7 @@
             listener(content);
         })
     </script>
-    <script src='http://localhost:3030/example2_guest.js'></script> -->
+    <script src='http://localhost:3030/caja/example2_guest.js'></script> -->
 </body>
 
 </html>

@@ -1,25 +1,21 @@
 function checkStrength(ev) {
     if (ev.pswd.length < 8) {
-        pswdService.feedback("Too small");
+        pswdService.feedback("Too small (min. 8)");
     }
     else {
         pswdService.feedback("Strong password!");
-        backendReq(ev.pswd)
+        
+        var url = 'http://localhost:3030/password/?pswd=' + ev.pswd
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {  
+                var beReply = JSON.parse(xhttp.responseText).reply;
+                pswdService.feedback(beReply);
+            }
+        };
+        xhttp.open("GET", url, true);
+        xhttp.send();
     }
-}
-
-
-
-function backendReq(pswd) {
-    var url = 'http://localhost:3030/password/?pswd=' + pswd
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {            
-            document.getElementById("backend").innerHTML = JSON.parse(xhttp.responseText).reply
-        }
-    };
-    xhttp.open("GET", url, true);
-    xhttp.send();
 }
 
 
