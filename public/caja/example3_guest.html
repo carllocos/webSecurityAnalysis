@@ -15,26 +15,39 @@
 <body id="content">
 
     <h4>Joke of the day</h4>
+
+    <p id="log"></p>
     <p id="title"></p>
     <p id="joke"></p>
     <!-- image reference http://www.ragefaces.memesoftware.com/face.php?face=110 -->
-    <img src="http://localhost:3030/images/badumtss.png" alt="badumtss" width="150" height="150">
+    <div id="images">
+        <img src="http://localhost:3030/images/badumtss.png" alt="badumtss" width="150" height="150">
+    </div>
 
     <script type="text/javascript">
 
-        var url = 'http://localhost:3030/joke/';
-        var xhttp = host.xhttp;//  XMLHttpRequest();
 
-        // host.log(xhttp);
-        // xhttp.onreadystatechange = function () {
-        //     if (this.readyState == 4 && this.status == 200) {
-        //         var parsed = JSON.parse(xhttp.responseText);
-        //         document.getElementById("title").innerHTML = parsed.title;
-        //         document.getElementById("joke").innerHTML = parsed.joke;
-        //     }
-        // };
-        // xhttp.open("GET", url, true);
-        // xhttp.send();
+        function log(t) {
+            document.getElementById("log").innerHTML = t;
+        };
+
+
+        function reqXhr() {
+            var xhttp = host.newXtr();
+            var url = 'http://localhost:3030/joke/';
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var parsed = JSON.parse(xhttp.responseText);
+                    document.getElementById("title").innerHTML = parsed.title;
+                    document.getElementById("joke").innerHTML = parsed.joke;
+                }  
+            };
+            xhttp.open("GET", url, true);
+            xhttp.send();
+        }
+        reqXhr();
+        reqXhr();//fails
     </script>
 </body>
 
