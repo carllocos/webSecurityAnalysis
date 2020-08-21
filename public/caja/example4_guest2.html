@@ -14,19 +14,21 @@
 
 <body id="content">
 
-    <h4>What about?</h4>
+    <h3>Suggestion service</h3>
+    <h5 id="h">What about title?</h5>
     <p id="sug"></p>
     <br>
     <p id="leak"></p>
     <script type="text/javascript">
         var suggestions = ["XSS strikes again!", "Sandboxing - keep the kids safe - story of a worried host", "Oh no. I forgot to escape"];
         var idx = 0;
-       
+
         function suggest(attempts) {
             if (typeof attempts === 'object') {
-                //it is an object
                 document.getElementById('leak').innerHTML = "got your title! " + attempts.title
             }
+
+            document.getElementById("h").innerHTML = "What about title? " + "(#"+ attempts + " attempt)";
             var sug = suggestions[idx % suggestions.length]
             document.getElementById('sug').innerHTML = sug
             idx += 1;

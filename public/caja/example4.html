@@ -16,8 +16,34 @@
     <div class="">
         <h3>Services Collaborate</h3>
 
-        <p>In this example we see how two services collaborate. One verifies if a post title is already taken, if so it
-            asks the other to suggest one. The title cannot be leaked.</p>
+        <p>In this example we simulate a situation where a user creates a post meant for a forum.
+            The post title needs to be uniqure. For this we use two services that collaborate.
+            One verifies if a post title is already taken (Verify service),
+             if so it asks the other to suggest one (suggestion service).
+            While asking the other it also provides the amount of attempts already made by the user.
+            The suggestion service suggests a title and displays the quantity of user attempts (just to 
+            illustrate that data share between services is possible).
+        </p>
+
+        <p>
+            The quantity of attempts can be shared between services, the title cannot.
+            After two verify attempts (click btn verify), 
+            the verify services succesfully leaks the title to the suggestion service.
+            This because the first button uses an unsafe tamed API function. Unsafe because the tamed function
+            never controls what content is being communicated to the suggestion service.
+        </p>
+
+       <p>
+            Verify with 'safe verify' button never leak the title, 
+            because the button uses a tamed function API that controls what content is being exchanged.
+            And forbids the exchange if the content is not a number.
+       </p>
+       <p>
+            The two buttons illustrate that the taming process is not everything.
+            Developers might think that they are safe because they tame the api prvoided to guest code.
+            However, attention is also needed in details such as 'communicated data'.
+        </p>
+
         <br>
         <div id="guest1" style="width: 400px; height: 200px;"></div>
         <div id="guest2" style="width: 400px; height: 200px;"></div>
@@ -34,43 +60,40 @@
             const GUEST1 = document.getElementById('guest1')
             const GUEST2 = document.getElementById('guest2')
             const NO_NETWORK = undefined;
-            const guest1URL = 'http://localhost:3030/example4_guest1.html'
-            const guest2URL = 'http://localhost:3050/example4_guest2.html'
+            const guest1URL = 'http://localhost:3030/caja/example4_guest1.html'
+            const guest2URL = 'http://localhost:3050/caja/example4_guest2.html'
 
             var shared = {
                 cb: null,
                 titleListener: (cb_) => {
                     this.cb = cb_
                 },
-                setTitle: (t_) => {
+                setTitle: (t_) => { this.cb(t_) }, //unsafe
+                setTitleSafe: (t_) => {
                     if (typeof t_ === 'number') {
                         this.cb(t_)
                     }
                 },
-                setTitleUnsafe: (t_) => { this.cb(t_) }
             };
 
+            //cajole guest1
             caja.load(GUEST1, NO_NETWORK, (frame) => {
                 var tamedSet = caja.tame(caja.markFunction(shared.setTitle));
-                var tamedSetUnsafe = caja.tame(caja.markFunction(shared.setTitleUnsafe));
+                var tamedSafeSet = caja.tame(caja.markFunction(shared.setTitleSafe));
                 frame.code(guest1URL, 'text/html')
-                    .api({ setTitle: tamedSet, setTitleUnsafe: tamedSetUnsafe })
+                    .api({ setTitle: tamedSet, setTitleSafe: tamedSafeSet })
                     .run()
 
             })
 
+            //cajole guest2
             caja.load(GUEST2, NO_NETWORK, (frame) => {
                 var tamedList = caja.tame(caja.markFunction(shared.titleListener))
                 frame.code(guest2URL, 'text/html')
                     .api({ titleListener: tamedList })
                     .run()
             })
-
-
-
         </script>
-        <!-- Uncomment next line and previous script to see what happens without Caja -->
-        <!-- <iframe src="http://localhost:3030/example1_guest.html" height="300" width="400" title="Iframe Example"></iframe> -->
 </body>
 
 </html>

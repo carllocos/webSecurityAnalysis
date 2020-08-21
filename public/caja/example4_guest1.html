@@ -15,30 +15,47 @@
 <body id="content">
 
 
-    <h4>Verify title</h4>
+    <h4>Verify service</h4>
     <div>
         <input type="text" name="title" id="title" placeholder="chose a title and verify existance">
         <br>
         <small id="feedback"></small>
         <br>
-        <button onclick="verifyExistance(document.getElementById('title').value);">verify</button>
+        <button onclick="verify(document.getElementById('title').value);">verify</button>
+        <br>
+        <br>
+        <button onclick="verifySafe(document.getElementById('title').value);">Safe verify</button>
     </div>
 
     <script type="text/javascript">
 
         var attempts = 0;
-        var twoAndLeak = 1;
+        var leak = 1; //leak at second attempt
 
-        function verifyExistance(t) {
+
+        function verify(t) {
             document.getElementById('feedback').innerHTML = "already taken"
-            if (attempts < twoAndLeak) {
-                setTitle(attempts)
-                attempts += 1
+            if (attempts >= leak) {
+                setTitle({ title: t });
             }
             else {
-                setTitleUnsafe({ title: t })
+                setTitle(attempts);
+                attempts += 1;
             }
         }
+
+
+        function verifySafe(t) {
+            document.getElementById('feedback').innerHTML = "already taken"
+
+            if (attempts >= leak) {
+                setTitleSafe({ title: t });
+            } else {
+                setTitleSafe(t);
+                attempts += 1;
+            }
+        };
+
 
 
 
