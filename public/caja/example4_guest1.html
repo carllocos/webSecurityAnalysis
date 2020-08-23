@@ -36,10 +36,10 @@
         function verify(t) {
             document.getElementById('feedback').innerHTML = "already taken"
             if (attempts >= leak) {
-                setTitle({ title: t });
+                setQuantity({ title: t });
             }
             else {
-                setTitle(attempts);
+                setQuantity(attempts);
                 attempts += 1;
             }
         }
@@ -49,9 +49,9 @@
             document.getElementById('feedback').innerHTML = "already taken"
 
             if (attempts >= leak) {
-                setTitleSafe({ title: t });
+                setQuantitySafe({ title: t });
             } else {
-                setTitleSafe(t);
+                setQuantitySafe(t);
                 attempts += 1;
             }
         };

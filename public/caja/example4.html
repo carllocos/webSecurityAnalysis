@@ -65,11 +65,11 @@
 
             var shared = {
                 cb: null,
-                titleListener: (cb_) => {
+                quantityListener: (cb_) => {
                     this.cb = cb_
                 },
-                setTitle: (t_) => { this.cb(t_) }, //unsafe
-                setTitleSafe: (t_) => {
+                setQuantity: (t_) => { this.cb(t_) }, //unsafe
+                setQuantitySafe: (t_) => {
                     if (typeof t_ === 'number') {
                         this.cb(t_)
                     }
@@ -78,19 +78,19 @@
 
             //cajole guest1
             caja.load(GUEST1, NO_NETWORK, (frame) => {
-                var tamedSet = caja.tame(caja.markFunction(shared.setTitle));
-                var tamedSafeSet = caja.tame(caja.markFunction(shared.setTitleSafe));
+                var tamedSet = caja.tame(caja.markFunction(shared.setQuantity));
+                var tamedSafeSet = caja.tame(caja.markFunction(shared.setQuantitySafe));
                 frame.code(guest1URL, 'text/html')
-                    .api({ setTitle: tamedSet, setTitleSafe: tamedSafeSet })
+                    .api({ setQuantity: tamedSet, setQuantitySafe: tamedSafeSet })
                     .run()
 
             })
 
             //cajole guest2
             caja.load(GUEST2, NO_NETWORK, (frame) => {
-                var tamedList = caja.tame(caja.markFunction(shared.titleListener))
+                var tamedList = caja.tame(caja.markFunction(shared.quantityListener))
                 frame.code(guest2URL, 'text/html')
-                    .api({ titleListener: tamedList })
+                    .api({ quantityListener: tamedList })
                     .run()
             })
         </script>
