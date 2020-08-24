@@ -24,11 +24,11 @@
             After two network access, any other attempt to access the network fails. The guest code attempts a third network access through another XMLHttpRequest which fails. A "XMLHttpRequest fail" is written on the dom to illustrate this"
         </p>
         <br>
-        <div id="guest"></div>
+        <div id="guest" style="height: 300p; width: 400px;"></div>
 
 
 
-        <div id="log"></div>
+        <div id="log" style="color:red;"></div>
 
         <!-- Comment script for behaviour without Caja -->
 
@@ -40,9 +40,9 @@
             })
 
             const EMBED = document.getElementById('guest')
+            
             const MAX_REQUESTS = 2
             var requests_made = 0
-
             const NETWORK_POLICY = {
                 rewrite: (uri) => {
                     if (requests_made < MAX_REQUESTS &&
@@ -53,9 +53,9 @@
                     return undefined
                 }
             };
+            
             const guestURL = 'http://localhost:3030/caja/example3_guest.html'
             caja.load(EMBED, NETWORK_POLICY, (frame) => {
-
                 caja.markCtor(XMLHttpRequest);
                 caja.grantMethod(XMLHttpRequest.prototype, "onreadystatechange");
                 caja.grantMethod(XMLHttpRequest.prototype, "open");
@@ -71,11 +71,10 @@
                             requests_made += 1;
                             return new XMLHttpRequest();
                         }else{
-                            logOnDom("XMLHttpRequest fail");
+                            logOnDom("XMLHttpRequest failed");
                         }
                     },
                 }
-
                 caja.markReadOnlyRecord(hostAPI);
                 caja.markFunction(hostAPI.newXtr);
                 var tamedAPI = caja.tame(hostAPI);
