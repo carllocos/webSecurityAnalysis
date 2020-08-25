@@ -9,8 +9,10 @@
         //(2) setup cajoler server
         caja.initialize({ cajaServer: 'http://caja.appspot.com/'})
         
-        //(3) configure DOM element and network policy
-        caja.load(/*DOM element*/, /* Network Policy object*/, (frame) => {
+        //(3) configure caja with a DOM element and network policy
+        var dom = document.getElementById("id");
+        var np = { rewrite: (uri)=> { /*policies*/ }}
+        caja.load(dom, np, (frame) => {
             //(4) Tame objects
 
             //(5)Cajole guest and provide API
