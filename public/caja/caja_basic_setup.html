@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <!-- (1) Load caja module-->
+    <script type="text/javascript" src="http://caja.appspot.com/caja.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        //(2) setup cajoler server
+        caja.initialize({ cajaServer: 'http://caja.appspot.com/'})
+        
+        //(3) specify embed Id and network policy
+        caja.load(EMBED, NO_NETWORK, (frame) => {
+            //(4) Tame objects
+
+            //(5)Cajole guest and provide API
+            frame.code("http://guestAddress.com/file", 'text/html')
+                .api(/*API for guest*/)
+                .run()
+        })
+    </script>
+</body>
+
+</html>
