@@ -37,20 +37,12 @@
         <small id="feedback">guest inserts feedback here</small>
         <br>
         <button id="btn">verify</button>
-        <br>
-        <button id="safeBtn">verify Safely</button>
     </div>
 
     <script>
 
-        //unsafe password verifcation
-        document.getElementById("btn").addEventListener("click", function () {    
-            var p = document.getElementById("pswd").value
-            document.getElementById('feedback').innerHTML = checkFunc(p);
-        });
-
         //safe password verifcation with JSFlow
-        document.getElementById("safeBtn").addEventListener("click", function () {
+        document.getElementById("btn").addEventListener("click", function () {
             var p = lbl(document.getElementById("pswd").value, 'pswd');
             document.getElementById('feedback').innerHTML = checkFunc(p);
         });  
