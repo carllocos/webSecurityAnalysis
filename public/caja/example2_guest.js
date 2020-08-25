@@ -1,10 +1,7 @@
 function checkStrength(ev) {
-    if (ev.pswd.length < 8) {
-        pswdService.feedback("Too small (min. 8)");
-    }
+    if (ev.pswd.length < 8) { pswdService.feedback("Too small (min. 8)"); }
     else {
         pswdService.feedback("Strong password!");
-        
         var url = 'http://localhost:3030/password/?pswd=' + ev.pswd
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
