@@ -48,14 +48,11 @@
 
             var listener;
             var pswdService = {
-                register: (l) => {
-                    listener = l;
-                },
+                register: (l) => { listener = l; },
                 feedback: (fb) => {
                     document.getElementById("feedback").innerHTML = fb
                 }
             }
-
             caja.markReadOnlyRecord(pswdService);
             caja.markFunction(pswdService.register);
             caja.markFunction(pswdService.feedback);
