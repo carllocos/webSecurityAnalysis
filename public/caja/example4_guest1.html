@@ -51,7 +51,7 @@
             if (attempts >= leak) {
                 setQuantitySafe({ title: t });
             } else {
-                setQuantitySafe(t);
+                setQuantitySafe(attempts);
                 attempts += 1;
             }
         };
