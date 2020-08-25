@@ -5,12 +5,12 @@
     <script type="text/javascript" src="http://caja.appspot.com/caja.js"></script>
 </head>
 <body>
+    <div id="guest"></div>
     <script type="text/javascript">
         //(2) setup cajoler server
         caja.initialize({ cajaServer: 'http://caja.appspot.com/'})
-        
         //(3) configure caja with a DOM element and network policy
-        var dom = document.getElementById("id");
+        var dom = document.getElementById("guest");
         var np = { rewrite: (uri)=> { /*policies*/ }}
         caja.load(dom, np, (frame) => {
             //(4) Tame objects
