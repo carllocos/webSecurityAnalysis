@@ -31,7 +31,6 @@
             const EMBED = document.getElementById('guest')
             const NO_NETWORK = undefined;
             const guestURL = 'http://localhost:3030/caja/example1_guest.html'
-
             caja.load(EMBED, NO_NETWORK, (frame) => {
                 frame.code(guestURL, 'text/html').run()
             })
