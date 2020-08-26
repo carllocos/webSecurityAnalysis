@@ -12,6 +12,9 @@ Regarding the report, sever 3000 is the host, sever 3030 is guest1 and 3050 is g
 
 If by any chance those ports are conflicting. You will have to manually change top of the file 'index.js' and the corresponding HTML and JS files in public/caja and public/jsflow directories.
 
+
+The three different servers can be used for Caja and JSFlow
+
 # Caja
 
 ## Browser
@@ -26,8 +29,7 @@ To access the examples you will have to type in the browser the name of each fil
 - example 3 http://localhost:3000/caja/example3.html
 - example 4 http://localhost:3000/caja/example4.html
 
-All of the examples containg a small description. And usually the guests are indicated with a light blue background color.
-
+All the examples contain a small description and usually the guests are displayed on a light blue background color.
 
 # JSFlow
 
@@ -40,6 +42,7 @@ On the loaded web page you can click on the blue button "Dowload Tortoise" and m
 
 When you restart Firefox, an additional window should popup. This is normal and means that the extension is correctly loaded. Otherwise, something went wrong.
 
+**VERY IMPORTANT:** when you test the JSFlow examples make sure to close the window that pops up when you access the example page. For unknown reasons, when that window is left open, the display of the alert box is inconsistent in the execution of the examples. More precisely, the dialog box message varies and sometimes the dialog box does not even appear. I suspect a bug in the extension tool.
 
 
 ## Accessing Examples
@@ -47,5 +50,5 @@ To access the examples you will have to type in the browser the name of each fil
 - example 1 http://localhost:3000/jsflow/example1.html
 - example 2 http://localhost:3000/jsflow/example2.html
 
-All of the examples containg a small description. And usually the guest is indicated with a light blue background color.
+All the examples contain a small description and usually the guests are displayed on a light blue background color.
 
